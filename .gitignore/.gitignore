@@ -1,0 +1,103 @@
+import numpy as np
+import pandas as pd
+
+iris_df = pd.read_csv("C:\\Users\\kartik singh\\Downloads\\iris.csv")
+iris_np = np.array(iris_df)
+iris_df.head()
+iris_setosa = []
+for j,i in iris_df.iterrows():
+    if i["Species"] == "Iris-setosa":
+        iris_setosa.append(i)
+iris_setosa = pd.DataFrame(iris_setosa)    
+
+iris_virginica = []
+for j,i in iris_df.iterrows():
+    if i["Species"] == "Iris-virginica":
+        iris_virginica.append(i)
+    
+
+iris_versicolor = []
+for j,i in iris_df.iterrows():
+    if i["Species"] == "Iris-versicolor":
+        iris_versicolor.append(i)
+iris_setosa = pd.DataFrame(iris_setosa)    
+iris_virginica = pd.DataFrame(iris_virginica)
+iris_versicolor = pd.DataFrame(iris_versicolor)
+
+iris_setosa_info = pd.DataFrame(iris_setosa.describe())
+iris_viginica_info =  pd.DataFrame(iris_virginica.describe())
+iris_versicolor_info = pd.DataFrame(iris_versicolor.describe())
+iris_df_info = pd.DataFrame(iris_df.describe())
+iris_df_info 
+
+def Z_score(x,mean,std):
+    Z_value=(x-mean)/std
+    return Z_value
+Z_sepal_len = []
+Z_sepal_wid = []
+Z_petal_len = []
+Z_petal_wid = []
+for j,i in iris_df.iterrows():    
+    Z_sepal_len.append(Z_score(i["SepalLengthCm"],iris_df_info.get_value("mean","SepalLengthCm"),iris_df_info.get_value("std","SepalLengthCm")))
+    Z_sepal_wid.append(Z_score(i["SepalWidthCm"],iris_df_info.get_value("mean","SepalWidthCm"),iris_df_info.get_value("std","SepalWidthCm")))
+    Z_petal_len.append(Z_score(i["PetalLengthCm"],iris_df_info.get_value("mean","PetalLengthCm"),iris_df_info.get_value("std","PetalLengthCm")))
+    Z_petal_wid.append(Z_score(i["PetalWidthCm"],iris_df_info.get_value("mean","PetalWidthCm"),iris_df_info.get_value("std","PetalWidthCm")))
+
+Z_petal_len_width = [a*b for a,b in zip(Z_petal_wid,Z_petal_len)]
+
+Z_petal_len_width = sum(Z_petal_len_width)
+
+pearsons_r_petal_len_wid = Z_petal_len_width/150
+print("pearsons_r_petal_len_wid : ",pearsons_r_petal_len_wid)
+
+Z_petal_len_sepal_len = [a*b for a,b in zip(Z_petal_len,Z_sepal_len)]
+
+Z_petal_len_sepal_len = sum(Z_petal_len_sepal_len)
+
+pearsons_r_petal_len_sepal_len = Z_petal_len_sepal_len/150
+print("pearsons_r_petal_len_sepal_len : ",pearsons_r_petal_len_sepal_len)
+
+Z_petal_len_sepal_wid = [a*b for  a,b in zip(Z_petal_len,Z_sepal_wid)]
+
+Z_petal_len_sepal_wid = sum(Z_petal_len_sepal_wid)
+
+pearsons_r_petal_len_sepal_wid = Z_petal_len_sepal_wid/150
+print("pearsons_r_petal_len_sepal_wid : ",pearsons_r_petal_len_sepal_wid)
+
+Z_petal_wid_sepal_len = [a*b for  a,b in zip(Z_petal_wid,Z_sepal_len)]
+
+Z_petal_wid_sepal_len = sum(Z_petal_wid_sepal_len)
+
+pearsons_r_petal_wid_sepal_len = Z_petal_wid_sepal_len/150
+print("pearsons_r_petal_len_sepal_wid : ",pearsons_r_petal_wid_sepal_len)
+
+avg_setosa_sepal_len = iris_setosa.SepalLengthCm.mean()
+avg_setosa_sepal_wid = iris_setosa.SepalWidthCm.mean()
+avg_setosa_petal_len = iris_setosa.PetalLengthCm.mean()
+avg_setosa_petal_wid = iris_setosa.PetalLengthCm.mean()
+setosa_recognition_list = []
+setosa_recognition_list.append(avg_setosa_sepal_len)
+setosa_recognition_list.append(avg_setosa_sepal_wid)
+setosa_recognition_list.append(avg_setosa_petal_len)
+setosa_recognition_list.append(avg_setosa_petal_wid)
+
+avg_virginica_sepal_len = iris_virginica.SepalLengthCm.mean()
+avg_virginica_sepal_wid = iris_virginica.SepalWidthCm.mean()
+avg_virginica_petal_len = iris_virginica.PetalLengthCm.mean()
+avg_virginica_petal_wid = iris_virginica.PetalLengthCm.mean()
+
+virginica_recognition_list=[]
+virginica_recognition_list.append(avg_virginica_sepal_len)
+virginica_recognition_list.append(avg_virginica_petal_wid)
+virginica_recognition_list.append(avg_virginica_sepal_len)
+virginica_recognition_list.append(avg_virginica_petal_wid)
+
+avg_versicolor_sepal_len = iris_versicolor.SepalLengthCm.mean()
+avg_versicolor_sepal_wid = iris_versicolor.SepalWidthCm.mean()
+avg_versicolor_petal_len = iris_versicolor.PetalLengthCm.mean()
+avg_versicolor_petal_wid = iris_versicolor.PetalLengthCm.mean()
+versicolor_recognition_list = []
+versicolor_recognition_list.append(avg_versicolor_sepal_len)
+versicolor_recognition_list.append(avg_versicolor_petal_wid)
+versicolor_recognition_list.append(avg_versicolor_sepal_len)
+versicolor_recognition_list.append(avg_versicolor_petal_wid)
